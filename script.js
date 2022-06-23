@@ -19,13 +19,13 @@ function service(url, callback) {
 
 class GoodsItem {
     constructor({ product_name, price }) {
-        this.title = product_name;
+        this.product_name = product_name;
         this.price = price;
     }
     return() {
         return `
         <div class="goods-item">
-            <h3>${this.title}</h3>
+            <h3>${this.product_name}</h3>
             <p>${this.price}</p>
         </div>
         `;
