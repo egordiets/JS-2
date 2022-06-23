@@ -20,16 +20,15 @@ class GoodsItem {
     };
 }
 
-calculatePrice() {
-    return this.items.reduce((prev, { price }) => {
-        return prev + price;
-    }, 0)
-}
-
 class GoodsList {
     items = [];
     fetchGoods() {
         this.items = goods;
+    }
+    calculatePrice() {
+        return this.items.reduce((prev, { price }) => {
+            return prev + price;
+        }, 0)
     }
     render() {
         const goods = this.items.map(item => {
@@ -37,8 +36,10 @@ class GoodsList {
             return goodItem.render();
         }).join('');
 
-        document.querySelector('.goods-list').innerHTML = goodsList;
+        document.querySelector('.goods-list').innerHTML = goods;
     }
 }
 
-renderGoodsList(goods);
+const goodsList = new GoodsList();
+goodsList.fetchGoods();
+goodsList.render();
