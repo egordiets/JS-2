@@ -22,14 +22,14 @@ class GoodsItem {
         this.product_name = product_name;
         this.price = price;
     }
-    return() {
+    render() {
         return `
-        <div class="goods-item">
-            <h3>${this.product_name}</h3>
-            <p>${this.price}</p>
-        </div>
-        `;
-    };
+      <div class="goods-item">
+        <h3>${this.product_name}</h3>
+        <p>${this.price}</p>
+      </div>
+    `;
+    }
 }
 
 class GoodsList {
