@@ -11,6 +11,12 @@ body {
 
 header {
     height: 100px;
+    display: flex;
+    background-color: black;
+}
+
+.actions, .search {
+    padding: 10px;
 }
 
 button {
@@ -35,4 +41,8 @@ button {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.goods-search {
+    height: 36px
 }
