@@ -5,22 +5,40 @@
     <meta charset="UTF-8">
     <title>eShop</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <script src="script.js"></script>
 </head>
 
 <body>
-    <header>
-        <div class="search">
-            <input type="text" class="goods-search" />
-            <button class="search-button" type="button">Искать</button>
+    <div id="root">
+        <header>
+            <div class="search">
+                <input type="text" class="goods-search" v-model="search" />
+                <button class="search-button" type="button" v-on:click="filterItems">Искать</button>
+            </div>
+            <div class="actions">
+                <button class="cart-button" type="button" v-on:click="setVisionCart">Корзина</button>
+            </div>
+        </header>
+        <main>
+            <div class="goods-list" v-if="filteredItems.length">
+                <div class="goods-item" v-for="item in filteredItems">
+                    <h3>{{item.product_name}}</h3>
+                    <p>{{item.price}}</p>
+                </div>
+            </div>
+            <div v-else>Нет данных</div>
+        </main>
+        <div class="fixed-area" v-if="isVisibleCart">
+            <div class="basket-cart">
+                <div class="basket-cart_header">
+                    <div class="basket-cart_header_title">Корзина</div>
+                    <div class="basket-cart_header_icon" @click="setVisionCart"></div>
+                </div>
+                <div class="basket-cart_content">content</div>
+            </div>
         </div>
-        <div class="actions">
-            <button class="cart-button" type="button">Корзина</button>
-        </div>
-    </header>
-    <main>
-        <div class="goods-list"></div>
-    </main>
-    <script src="script.js"></script>
+    </div>
 
 </body>
 
