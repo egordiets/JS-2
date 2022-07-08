@@ -8,11 +8,60 @@ function service(url) {
 }
 
 function init() {
+    Vue.component('custom-search', {
+        template: `
+          <input type="text" class="goods-search" @input="$emit('input', $event.target.value)"/>
+        `
+    })
+
+    const CustomButton = Vue.component('custom-button', {
+        template: `
+          <button class="search-button" type="button" v-on:click="$emit('click')">
+             <slot></slot>
+          </button>
+        `
+    })
+
+    const basketGoods = Vue.component('basket-goods', {
+        data() {
+            return {
+                basketGoodsItems: []
+            }
+        },
+
+        template: `
+          <div class="fixed-area">
+             <div class="basket-cart">
+                <div class="basket-cart_header">
+                   <h1 class="basket-cart_header_title">Корзина</h1>
+                   <div class="basket-cart_header_icon"
+                      v-on:click="$emit('closeclick')"
+                   ></div>
+                </div>
+                <div class="basket-cart_content">
+                   content
+                </div>
+             </div>
+          </div>
+        `
+    })
+
+    const goodsItem = Vue.component('goods-item', {
+        props: [
+            'item'
+        ],
+        template: `
+          <div class="goods-item">
+             <h3>{{ item.product_name }}</h3>
+             <p>{{ item.price }}</p>
+          </div>
+        `
+    })
+
     const app = new Vue({
         el: '#root',
         data: {
             items: [],
-            filteredItems: [],
             search: '',
             isVisibleCart: false
         },
@@ -26,17 +75,17 @@ function init() {
                     this.filteredItems = data;
                 });
             },
-            filterItems() {
-                this.filteredItems = this.items.filter(({ product_name }) => {
-                    return product_name.match(new RegExp(this.search, 'gui'))
-                })
-            },
         },
         computed: {
             calculatePrice() {
                 return this.filteredItems.reduce((prev, { price }) => {
                     return prev + price;
                 }, 0)
+            },
+            filteredItems() {
+                return this.items.filter(({ product_name }) => {
+                    return product_name.match(new RegExp(this.search, 'gui'))
+                })
             }
         },
         mounted() {
