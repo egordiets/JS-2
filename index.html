@@ -13,31 +13,20 @@
     <div id="root">
         <header>
             <div class="search">
-                <input type="text" class="goods-search" v-model="search" />
-                <button class="search-button" type="button" v-on:click="filterItems">Искать</button>
+                <custom-search v-model="search"></custom-search>
+                <!-- <input type="text" class="goods-search" v-model="search" />
+                <custom-button @click="filterItems">Искать</custom-button> -->
             </div>
             <div class="actions">
-                <button class="cart-button" type="button" v-on:click="setVisionCart">Корзина</button>
+                <custom-button v-on:click="setVisionCart">Корзина</custom-button>
             </div>
         </header>
         <main>
-            <div class="goods-list" v-if="filteredItems.length">
-                <div class="goods-item" v-for="item in filteredItems">
-                    <h3>{{item.product_name}}</h3>
-                    <p>{{item.price}}</p>
-                </div>
+            <div class="goods-list">
+                <goods-item v-for="item in filteredItems" v-bind:item="item"></goods-item>
             </div>
-            <div v-else>Нет данных</div>
         </main>
-        <div class="fixed-area" v-if="isVisibleCart">
-            <div class="basket-cart">
-                <div class="basket-cart_header">
-                    <div class="basket-cart_header_title">Корзина</div>
-                    <div class="basket-cart_header_icon" @click="setVisionCart"></div>
-                </div>
-                <div class="basket-cart_content">content</div>
-            </div>
-        </div>
+        <basket-goods v-if="isVisibleCart" v-on:closeclick="setVisionCart"></basket-goods>
     </div>
 
 </body>
