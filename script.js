@@ -1,6 +1,6 @@
-const BASE_URL = 'https://localhost:8000/';
-const GET_GOODS_ITEMS = `${BASE_URL}goods`;
-//const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`;
+const BASE_URL = 'http://localhost:8000/';
+const GET_GOODS_ITEMS = `${BASE_URL}goods`
+// const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
 
 function service(url) {
     return fetch(url)
@@ -9,16 +9,23 @@ function service(url) {
 
 function init() {
     Vue.component('custom-search', {
+        model: {
+            prop: 'value',
+            event: 'input'
+        },
+        props: [
+            'value'
+        ],
         template: `
-          <input type="text" class="goods-search" @input="$emit('input', $event.target.value)"/>
+            <input type="text" class="goods-search" @input="$emit('input', $event.target.value)"/>
         `
     })
 
     const CustomButton = Vue.component('custom-button', {
         template: `
-          <button class="search-button" type="button" v-on:click="$emit('click')">
-             <slot></slot>
-          </button>
+            <button class="search-button" type="button" v-on:click="$emit('click')">
+               <slot></slot>
+            </button>
         `
     })
 
@@ -30,25 +37,26 @@ function init() {
         },
 
         template: `
-          <div class="fixed-area">
-             <div class="basket-cart">
-                <div class="basket-cart_header">
-                   <h1 class="basket-cart_header_title">Корзина</h1>
-                   <div class="basket-cart_header_icon"
-                      v-on:click="$emit('closeclick')"
-                   ></div>
-                </div>
-                <div class="basket-cart_content">
-                   content
-                </div>
-             </div>
-          </div>
+            <div class="fixed-area">
+               <div class="basket-cart">
+                  <div class="basket-cart_header">
+                     <h1 class="basket-cart_header_title">Корзина</h1>
+                     <div class="basket-cart_header_icon"
+                        v-on:click="$emit('closeclick')"
+                     ></div>
+                  </div>
+                  <div class="basket-cart_content">
+                     content
+                  </div>
+               </div>
+            </div>
         `,
-        // mounted() {
-        //     service(GET_BASKET_GOODS_ITEMS).then((basketGoods) => {
-        //         this.basketGoodsItems = basketGoods
-        //     })
-        // }
+        mounted() {
+            service(GET_BASKET_GOODS_ITEMS).then((basketGoods) => {
+                debugger
+                this.basketGoodsItems = basketGoods
+            })
+        }
     })
 
     const goodsItem = Vue.component('goods-item', {
@@ -56,10 +64,10 @@ function init() {
             'item'
         ],
         template: `
-          <div class="goods-item">
-             <h3>{{ item.product_name }}</h3>
-             <p>{{ item.price }}</p>
-          </div>
+            <div class="goods-item">
+               <h3>{{ item.product_name }}</h3>
+               <p>{{ item.price }}</p>
+            </div>
         `
     })
 
