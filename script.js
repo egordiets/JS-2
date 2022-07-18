@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:8000/';
 const GET_GOODS_ITEMS = `${BASE_URL}goods`
-// const GET_BASKET_GOODS_ITEMS = `${BASE_URL}getBasket.json`
+const GET_BASKET_GOODS_ITEMS = `${BASE_URL}basket-goods`
 
 function service(url) {
     return fetch(url)
@@ -18,6 +18,25 @@ function init() {
         ],
         template: `
             <input type="text" class="goods-search" @input="$emit('input', $event.target.value)"/>
+        `
+    })
+
+    const BasketItem = Vue.component('basket-item', {
+        props: [
+            'item'
+        ],
+        template: `
+            <div class="basket-item">
+                <div class="basket-item_field">
+                    <span class="basket-item_title">{{ item.product_name }}</span>
+                    <span class="basket-item_price">({{ item.price }}р. )</span>
+                </div>
+                <div class="basket-item_count">
+                    <span>{{ item.count }}шт.</span>
+                    <button>+</button>
+                    <button>-</button>
+                </div>
+            </div>
         `
     })
 
@@ -46,14 +65,13 @@ function init() {
                      ></div>
                   </div>
                   <div class="basket-cart_content">
-                     content
+                    <basket-item v-for="item in basketGoodsItems" :item="item"></basket-item>
                   </div>
                </div>
             </div>
         `,
         mounted() {
             service(GET_BASKET_GOODS_ITEMS).then((basketGoods) => {
-                debugger
                 this.basketGoodsItems = basketGoods
             })
         }
@@ -87,6 +105,11 @@ function init() {
                     this.items = data;
                     this.filteredItems = data;
                 });
+            },
+            addGood(goodId) {
+                servicePost(GET_BASKET_GOODS_ITEMS, {
+                    id: goodId,
+                })
             },
         },
         computed: {
