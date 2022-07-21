@@ -1,0 +1,22 @@
+[
+    {
+        "id": "1",
+        "product_name": "Флешка",
+        "price": 200
+    },
+    {
+        "id": "2",
+        "product_name": "Ноутбук",
+        "price": 1000
+    },
+    {
+        "id": "3",
+        "product_name": "Мышка",
+        "price": 300
+    },
+    {
+        "id": "4",
+        "product_name": "Телефон",
+        "price": 500
+    }
+]
