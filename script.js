@@ -1,10 +1,24 @@
 const BASE_URL = 'http://localhost:8000/';
-const GET_GOODS_ITEMS = `${BASE_URL}goods`
+const GOODS = `${BASE_URL}goods`;
+const GET_GOODS_ITEMS = `${BASE_URL}goods.json`
 const GET_BASKET_GOODS_ITEMS = `${BASE_URL}basket-goods`
 
 function service(url) {
     return fetch(url)
         .then((res) => res.json())
+}
+
+function serviceWithBody(url = "", method = "POST", body = {}) {
+    return fetch(
+        url,
+        {
+            method,
+            headers: {
+                'Content-type': 'application/json; charset=UTF-8',
+            },
+            body: JSON.stringify(body)
+        }
+    ).then((res) => res.json())
 }
 
 function init() {
@@ -33,8 +47,8 @@ function init() {
                 </div>
                 <div class="basket-item_count">
                     <span>{{ item.count }}шт.</span>
-                    <button>+</button>
-                    <button>-</button>
+                    <button @click="$emit('add', item.id)">+</button>
+                    <button @click="$emit('delete', item.id)">-</button>
                 </div>
             </div>
         `
@@ -65,7 +79,12 @@ function init() {
                      ></div>
                   </div>
                   <div class="basket-cart_content">
-                    <basket-item v-for="item in basketGoodsItems" :item="item"></basket-item>
+                    <basket-item 
+                    v-for="item in basketGoodsItems" 
+                    :item="item"
+                    @add="addGood"
+                    @delete="deleteGood"
+                    ></basket-item>
                   </div>
                </div>
             </div>
@@ -74,6 +93,22 @@ function init() {
             service(GET_BASKET_GOODS_ITEMS).then((basketGoods) => {
                 this.basketGoodsItems = basketGoods
             })
+        },
+        methods: {
+            addGood(id) {
+                serviceWithBody(GET_BASKET_GOODS_ITEMS, "POST", {
+                    id
+                }).then((data) => {
+                    this.basketGoodsItems = data
+                })
+            },
+            deleteGood(id) {
+                serviceWithBody(GET_BASKET_GOODS_ITEMS, "DELETE", {
+                    id
+                }).then((data) => {
+                    this.basketGoodsItems = data
+                })
+            }
         }
     })
 
@@ -85,8 +120,18 @@ function init() {
             <div class="goods-item">
                <h3>{{ item.product_name }}</h3>
                <p>{{ item.price }}</p>
+               <div>
+                    <custom-button @click="addGood">Добавить</custom-button>
+               </div>
             </div>
-        `
+        `,
+        methods: {
+            addGood() {
+                serviceWithBody(GOODS, "POST", {
+                    id: this.item.id
+                })
+            }
+        }
     })
 
     const app = new Vue({

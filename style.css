@@ -44,9 +44,15 @@ button {
     padding: 10px;
     box-sizing: border-box;
     outline: 1px solid black;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-rows: min-content auto min-content;
+    /* flex-direction: column; */
     gap: 10px;
+}
+
+.goods-item > * {
+    display: flex;
+    justify-content: center;
 }
 
 .goods-search {
