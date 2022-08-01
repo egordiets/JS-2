@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>eShop</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14"></script>
+</head>
+
+<body>
+    <div id="root">
+        <header>
+            <div class="search">
+                <custom-search v-model="search"></custom-search>
+                <!-- <input type="text" class="goods-search" v-model="search" />
+                <custom-button @click="filterItems">Искать</custom-button> -->
+            </div>
+            <div class="actions">
+                <custom-button v-on:click="setVisionCart">Корзина</custom-button>
+            </div>
+        </header>
+        <main>
+            <div class="goods-list">
+                <goods-item v-for="item in filteredItems" v-bind:item="item"></goods-item>
+            </div>
+        </main>
+        <basket-goods v-if="isVisibleCart" v-on:closeclick="setVisionCart"></basket-goods>
+    </div>
+
+</body>
+
+</html>
