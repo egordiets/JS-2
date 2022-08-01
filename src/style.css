@@ -1,0 +1,100 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+html, body, #root {
+    width: 100%;
+    height: 100%;
+}
+
+#root {
+    display: grid;
+    grid-template-rows: max-content auto;
+    gap: 40px;
+    position: relative;
+}
+
+header {
+    height: 100px;
+    display: flex;
+    background-color: black;
+}
+
+.actions, .search {
+    padding: 10px;
+}
+
+button {
+    padding: 10px;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin: 10px;
+}
+
+.goods-list {
+    display: flex;
+    justify-content: center;
+    gap: 40px
+}
+
+.goods-item {
+    width: 200px;
+    height: 300px;
+    padding: 10px;
+    box-sizing: border-box;
+    outline: 1px solid black;
+    display: grid;
+    grid-template-rows: min-content auto min-content;
+    /* flex-direction: column; */
+    gap: 10px;
+}
+
+.goods-item > * {
+    display: flex;
+    justify-content: center;
+}
+
+.goods-search {
+    height: 36px
+}
+
+.fixed-area{
+    position: fixed;
+    background-color: rgba(0,0,0, 0.5);
+    display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+}
+
+.basket-cart{
+    width: 80%;
+    height: 80%;
+    background-color: white;
+    display: grid;
+    grid-template-rows: max-content auto;
+}
+
+.basket-cart_header{
+    box-sizing: border-box;
+    display: grid;
+    grid-template-columns: auto max-content;
+}
+
+.basket-cart_header_title{
+    padding: 10px;
+}
+
+.basket-cart_header_icon{
+    background-image: url("./img/icon.png");
+    margin: 30px;
+    background-size: contain;
+    width: 30px;
+    height: 30px;
+}
+
+.basket-cart_content{
+    padding: 10px;
+}
